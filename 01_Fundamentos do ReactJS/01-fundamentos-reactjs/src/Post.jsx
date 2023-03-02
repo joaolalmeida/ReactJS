@@ -1,5 +1,13 @@
-export function Post() {
-  return <p>Post</p>
+// props:{ author: "", content: ''}
+
+export function Post(props) {
+  //console.log(props);
+  return (
+  <div>
+    <strong>{props.author}</strong>
+    <p>{props.content}</p>
+  </div>
+  ) //Colocando chaves vai aparecer o conteudo 
 }
 //export default Button
 
