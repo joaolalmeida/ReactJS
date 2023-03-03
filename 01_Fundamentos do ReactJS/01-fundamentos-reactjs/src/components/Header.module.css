@@ -1,0 +1,6 @@
+/*Colocando o module no nome do arquivo para especificar para qual arquivo apenas ele vai responder */
+
+.header {
+  background-color: #333;
+  height: 80px;
+}
