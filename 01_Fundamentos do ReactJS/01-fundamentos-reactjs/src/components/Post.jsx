@@ -18,7 +18,7 @@ export function Post() {
           Publicado há 1h
         </time>{" "}
         {/* Colocando title passando o mouse aparece o horario da publicação */}
-      </header>
+      </header>''
 
       <div className={styles.content}>
         <p>Fala galeraa 👋</p>
@@ -30,7 +30,9 @@ export function Post() {
           👉<a href=""> jane.design/doctorcare</a>
         </p>
         <p>
-          <a href=""> #novoprojeto #nlw #rocketseat</a>
+          <a href=""> #novoprojeto</a>{' '}
+          <a href=""> #nlw</a>{' '}
+          <a href=""> #rocketseat</a>{' '}
         </p>
       </div>
     </article>
