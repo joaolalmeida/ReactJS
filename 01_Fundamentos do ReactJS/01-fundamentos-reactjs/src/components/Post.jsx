@@ -1,3 +1,4 @@
+import { Avatar } from './Avatar';
 import { Comment } from './Comment';
 import styles from './Post.module.css';
 
@@ -6,10 +7,7 @@ export function Post() {
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <img
-            className={styles.avatar}
-            src="https://github.com/joaolalmeida.png"
-          />
+          <Avatar hasBorder src="https://github.com/joaolalmeida.png" /> {/* passar a proprierade hasBorder sem o true o react entente que ela é true mesmo assim */}
           <div className={styles.authorInfo}>
             <strong>Diego Fernandes</strong>
             <span>Web Developer</span>
@@ -19,8 +17,8 @@ export function Post() {
           Publicado há 1h
         </time>{" "}
         {/* Colocando title passando o mouse aparece o horario da publicação */}
-      </header>''
-
+      </header>
+      ''
       <div className={styles.content}>
         <p>Fala galeraa 👋</p>
         <p>
@@ -31,24 +29,19 @@ export function Post() {
           👉<a href=""> jane.design/doctorcare</a>
         </p>
         <p>
-          <a href=""> #novoprojeto</a>{' '}
-          <a href=""> #nlw</a>{' '}
-          <a href=""> #rocketseat</a>{' '}
+          <a href=""> #novoprojeto</a> <a href=""> #nlw</a>{" "}
+          <a href=""> #rocketseat</a>{" "}
         </p>
       </div>
-
       <form className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
 
-        <textarea
-          placeholder='Deixe um comentário'        
-        />
+        <textarea placeholder="Deixe um comentário" />
 
         <footer>
           <button type="submit">Publicar</button>
         </footer>
       </form>
-
       <div className={styles.commentList}>
         <Comment />
         <Comment />
