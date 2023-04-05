@@ -1,45 +1,48 @@
-import { format, formatDistanceToNow } from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR'
+import { format, formatDistanceToNow } from "date-fns"
+import ptBR from "date-fns/locale/pt-BR"
 
-import { Avatar } from './Avatar';
-import { Comment } from './Comment';
+import { Avatar } from "./Avatar"
+import { Comment } from "./Comment"
 
-import styles from './Post.module.css';
-import { useState } from 'react';
+import styles from "./Post.module.css"
+import { useState } from "react"
 
+export function Post({ author, publishedAt, content }) {
+  // para nao ficar repetindo props em todos os componentes colocar as propriedades que estao dentro do props e entre {}
 
+  const [comments, setComments] = useState([
+    //estado = variaveis que eu quero que o componente monitore
+    "Post muito bacana, hein?!",
+  ])
 
+  const [newCommentText, setNewCommentText] = useState("") // para limpar a text area apos escrever o comentario
 
-export function Post({ author, publishedAt, content }) { // para nao ficar repetindo props em todos os componentes colocar as propriedades que estao dentro do props e entre {}
+  const publishedDateFormatted = format(
+    publishedAt,
+    "d 'de' LLLL 'às' HH:mm'h'",
+    {
+      locale: ptBR,
+    }
+  ) // 11 de Maio às 08:13h (aspas simples nas outras letras que nao sao padrao da biblioteca de data)
 
-  const [comments, setComments] = useState([ //estado = variaveis que eu quero que o componente monitore
-  1,
-  2,
-])
-
-  const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
-    locale: ptBR,
-  }) // 11 de Maio às 08:13h (aspas simples nas outras letras que nao sao padrao da biblioteca de data)
-  
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
     locale: ptBR,
     addSuffix: true,
   })
-  
+
   function handleCreateNewComment() {
     event.preventDefault() //Para evitar o padrao do html de reiniciar a pagina
 
-    setComments([...comments, comments.length + 1]) //forma para adicionar mais um comentario
+    const newCommentText = event.target.comment.value //para pegar o valor na textarea
 
+    setComments([...comments, newCommentText]) //forma para adicionar mais um comentario
+    setNewCommentText('')
   }
-  
-  /*const publishedDateFormatted = new Intl.DateTimeFormat('pt-BR', { // trabalhando com data e horario utilizando o Intl do proprios JS
-    day: '2-digit',
-    month: 'long',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(publishedAt) */
-  
+
+  function handleNewCommentChange() {
+    setNewCommentText(event.target.value)
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -60,7 +63,6 @@ export function Post({ author, publishedAt, content }) { // para nao ficar repet
         {/* Colocando title passando o mouse aparece o horario da publicação */}
       </header>
       <div className={styles.content}>
-        {" "}
         {/* estrutura para pular linha a cada paragrafo do content no app.jsx */}
         {content.map((line) => {
           if (line.type === "paragraph") {
@@ -83,7 +85,12 @@ export function Post({ author, publishedAt, content }) { // para nao ficar repet
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
 
-        <textarea placeholder="Deixe um comentário" />
+        <textarea
+          name="comment" // colocar name para poder vincular com a const newCommentText
+          placeholder="Deixe um comentário"
+          value={newCommentText}
+          onChange={handleNewCommentChange}
+        />
 
         <footer>
           <button type="submit">Publicar</button>
@@ -92,7 +99,7 @@ export function Post({ author, publishedAt, content }) { // para nao ficar repet
 
       <div className={styles.commentList}>
         {comments.map((comment) => {
-          return <Comment />
+          return <Comment content={comment} />
         })}
       </div>
     </article>
