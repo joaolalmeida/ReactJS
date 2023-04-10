@@ -66,16 +66,13 @@ export function Post({ author, publishedAt, content }) {
         {/* estrutura para pular linha a cada paragrafo do content no app.jsx */}
         {content.map((line) => {
           if (line.type === "paragraph") {
-            return <p>{line.content}</p>
+            return <p key={line.content}>{line.content}</p>
           } else if (line.type === "link") {
-            return (
-              <p>
-                <a href="">{line.content}</a>
-              </p>
+            return (<p key={line.content}><a href="#">{line.content}</a></p>
             )
           } else if (line.type === "link#") {
             return (
-              <span>
+              <span key={line.content}>
                 <a href="">{line.content}</a>
               </span>
             )
@@ -98,10 +95,11 @@ export function Post({ author, publishedAt, content }) {
       </form>
 
       <div className={styles.commentList}>
-        {comments.map((comment) => {
-          return <Comment content={comment} />
+        {comments.map(comment => {
+          return <Comment key={comment} content={comment} />
         })}
       </div>
     </article>
   )
 }
+ 
