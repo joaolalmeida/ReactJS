@@ -26,7 +26,11 @@ export function Comment({ content, onDeleteComment }: CommentProps) {
 
   return (
     <div className={styles.comment}>
-      <Avatar hasBorder={false} src="https://github.com/joaolalmeida.png" alt="" />  {/* Criando uma proprierade chamada hasBorder para tirar a borda deste elemento em especifico */}
+      <Avatar
+        hasBorder={false}  //{/* Criando uma proprierade chamada hasBorder para tirar a borda deste elemento em especifico */}
+        src="https://github.com/joaolalmeida.png"
+        alt=""
+        />  
 
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>

@@ -14,18 +14,23 @@ interface Author {
 }
 
 interface Content {
-  type: 'paragraph' | 'link',
+  type: 'paragraph' | 'link' | 'link#',
   content: string
 }
 
-interface PostProps {
+ export interface PostType {
+  id: number
   author: Author
   publishedAt: Date
   content: Content[]
 }
 
+interface PostProps {
+ post: PostType
+}
 
-export function Post({ author, publishedAt, content }: PostProps) {
+
+export function Post({ post }: PostProps) {
   // para nao ficar repetindo props em todos os componentes colocar as propriedades que estao dentro do props e entre {}
 
   const [comments, setComments] = useState([
@@ -36,14 +41,14 @@ export function Post({ author, publishedAt, content }: PostProps) {
   const [newCommentText, setNewCommentText] = useState('') // para limpar a text area apos escrever o comentario
 
   const publishedDateFormatted = format(
-    publishedAt,
+    post.publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
     {
       locale: ptBR,
     }
   ) // 11 de Maio às 08:13h (aspas simples nas outras letras que nao sao padrao da biblioteca de data)
 
-  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+  const publishedDateRelativeToNow = formatDistanceToNow(post.publishedAt, {
     locale: ptBR,
     addSuffix: true,
   })
@@ -77,16 +82,16 @@ export function Post({ author, publishedAt, content }: PostProps) {
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar hasBorder src={author.avatarUrl} />{" "}
+          <Avatar hasBorder src={post.author.avatarUrl} />{" "}
           {/* passar a proprierade hasBorder sem o true o react entente que ela é true mesmo assim */}
           <div className={styles.authorInfo}>
-            <strong>{author.name}</strong>
-            <span>{author.role}</span>
+            <strong>{post.author.name}</strong>
+            <span>{post.author.role}</span>
           </div>
         </div>
         <time
           title={publishedDateFormatted}
-          dateTime={publishedAt.toISOString()}
+          dateTime={post.publishedAt.toISOString()}
         >
           {publishedDateRelativeToNow}
         </time>
@@ -94,7 +99,7 @@ export function Post({ author, publishedAt, content }: PostProps) {
       </header>
       <div className={styles.content}>
         {/* estrutura para pular linha a cada paragrafo do content no app.jsx */}
-        {content.map((line) => {
+        {post.content.map((line) => {
           if (line.type === "paragraph") {
             return <p key={line.content}>{line.content}</p>
           } else if (line.type === "link") {
